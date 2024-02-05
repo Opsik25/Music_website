@@ -141,7 +141,8 @@ SELECT a.album_name
   JOIN song AS s
     ON a.album_id = s.album_id
  GROUP BY a.album_name
-HAVING COUNT(a.album_name) = (SELECT MIN(song_count) 
-                                FROM (SELECT COUNT(*) AS song_count 
+HAVING COUNT(a.album_name) = (SELECT COUNT(*) AS song_count 
                                         FROM song AS s
-                                       GROUP BY s.album_id));
+                                       GROUP BY s.album_id
+                                       ORDER BY COUNT(*)
+                                       LIMIT 1);
